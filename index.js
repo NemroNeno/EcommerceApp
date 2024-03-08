@@ -16,33 +16,17 @@ app.use(json());
 app.use(morgan('dev'));
 app.use(cors());
 
-
-
-
-
-
-
-
-
 //config ENV
 config();
 
-
 //Database Config
 connectDB()
-
-
 
 //Routes
 
 app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/category",categoryRoute)
 app.use("/api/v1/product",productRoute)
-
-
-
-
-
 
 
 

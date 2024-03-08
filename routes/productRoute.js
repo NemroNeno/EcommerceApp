@@ -19,7 +19,13 @@ import {
 import formidable from "express-formidable";
 const route = express.Router();
 //Routes for Products API
-route.post( "/create-product", requiredSignIn, isAdmin, formidable(), createProductController);
+route.post(
+  "/create-product",
+  requiredSignIn,
+  isAdmin,
+  formidable(),
+  createProductController
+);
 route.put(
   "/update-product/:pid",
   requiredSignIn,

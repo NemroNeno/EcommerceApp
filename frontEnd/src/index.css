@@ -106,3 +106,8 @@ p.mt-2 {
 h4{
   font-weight: normal;
 }
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

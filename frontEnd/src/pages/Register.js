@@ -17,11 +17,14 @@ const Register = () => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      innerHeight: "100%",
+      outerHeight: "100%",
     },
   };
-  const [modalIsOpen, setIsOpen] = useState(true);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-  function openModal() {
+  function openModal(e) {
+    e.preventDefault();
     setIsOpen(true);
   }
 
@@ -101,9 +104,9 @@ const Register = () => {
       );
       setLoading(false);
       if (res.data.success) {
-        toast.success("Succesfully Signed Up", {
+        await toast.success("Succesfully Signed Up", {
           position: "bottom-right",
-          autoClose: 3000,
+          autoClose: 6000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -297,7 +300,7 @@ const Register = () => {
                 </div>
               </div>
               <button
-                onClick={handleSubmit}
+                onClick={openModal}
                 class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 {loading ? (
@@ -343,19 +346,33 @@ const Register = () => {
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Ask Questino"
+        className="h-2/6 w-4/12  bg-blue-200/65 mt-[250px] !mx-auto border-2 border-black/20 rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:ring-primary-600 dark:ring-offset-gray-800"
+        contentLabel="Ask Question"
+        S
       >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>E</h2>
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
+        <h2
+          ref={(_subtitle) => (subtitle = _subtitle)}
+          className="text-black font-sans text-center mt-3 text-xl"
+        >
+          Enter your favourite movie name?{" "}
+        </h2>
+        <input
+          placeholder="Star-Wars"
+          onChange={handleChange}
+          name="answer"
+          value={user_info.answer}
+          className="w-6/12 h-[40px] !ml-[120px] my-[40px] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+        />
+        <button
+          disabled={user_info.answer.length < 1}
+          onClick={(e) => {
+            closeModal();
+            handleSubmit(e);
+          }}
+          className=" !ml-[180px] text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+        >
+          Register
+        </button>
       </Modal>
     </section>
   );

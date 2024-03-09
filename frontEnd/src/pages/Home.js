@@ -132,24 +132,64 @@ const Home = () => {
         <div className="col-md-3">
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
-            {categories.map((c) => (
-              <Checkbox
-                key={c?._id}
-                onChange={(e) => handleFilter(e.target.checked, c._id)}
-              >
-                {c?.name}
-              </Checkbox>
-            ))}
+            <fieldset className="ml-[10px] mb-[80px]">
+              <legend className="sr-only">Checkboxes</legend>
+
+              <div className="space-y-2 mx-auto">
+                {categories?.map((c) => (
+                  <label
+                    htmlFor="Option3"
+                    className="h-[50px] w-[300px] flex cursor-pointer items-start gap-4 rounded-lg border border-gray-200 p-2 transition hover:bg-gray-50 has-[:checked]:bg-blue-50 dark:border-gray-700 dark:hover:bg-gray-900 dark:has-[:checked]:bg-blue-700/10"
+                  >
+                    <div className="flex items-center">
+                      &#8203;
+                      <input
+                        key={c?._id}
+                        onChange={(e) => handleFilter(e.target.checked, c._id)}
+                        type="checkbox"
+                        className="size-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:ring-offset-gray-900"
+                        id="Option3"
+                      />
+                    </div>
+
+                    <div>
+                      <strong className="text-pretty font-medium text-gray-900 dark:text-white">
+                        {c?.name}
+                      </strong>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
           </div>
           <h4 className="text-center">Filter By Price</h4>
           <div className="d-flex flex-column">
-            <Radio.Group onChange={(e) => setRadio(e.target.value)}>
-              {prices.map((p) => (
-                <div key={p._id}>
-                  <Radio value={p.array}>{p.name}</Radio>
-                </div>
-              ))}
-            </Radio.Group>
+            <fieldset className="space-y-4">
+              <legend className="sr-only">Delivery</legend>
+
+              <div>
+                {prices.map((p) => (
+                  <label className="h-[50px] w-[300px] ml-[10px] mt-[5px] flex cursor-pointer justify-between  rounded-lg border border-gray-100 bg-white p-2 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700">
+                    <div>
+                      <p className="text-gray-700 dark:text-gray-200">
+                        {p.name}
+                      </p>
+                    </div>
+
+                    <input
+                      onChange={(e) => setRadio(e.target.value)}
+                      type="radio"
+                      name="DeliveryOption"
+                      value={p.array}
+                      id="DeliveryPriority"
+                      className="size-5 border-gray-300 text-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:ring-offset-gray-900"
+                    />
+                  </label>
+                ))}
+              </div>
+
+              <div></div>
+            </fieldset>
           </div>
           <div className="d-flex flex-column">
             <button
@@ -187,11 +227,14 @@ const Home = () => {
                     </button>
                     <button
                       className="btn btn-secondary m-2"
-                      onClick={() => {setItem([...item, p])
-                      toast.success("Product is added to cart")
-                      localStorage.setItem('cart',JSON.stringify([...item,p]))
-                      }
-                      }
+                      onClick={() => {
+                        setItem([...item, p]);
+                        toast.success("Product is added to cart");
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify([...item, p])
+                        );
+                      }}
                     >
                       Add to Cart
                     </button>

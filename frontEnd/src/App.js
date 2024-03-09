@@ -11,13 +11,13 @@ import Register from "./pages/Register.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/Login.js";
-import {PrivateRoute} from "./Components/Routes/private.js";
-import {AdminRoute} from "./Components/Routes/AdminRoute.js";
-import { Dashboard } from './pages/user/Dashboard.js';
+import { PrivateRoute } from "./Components/Routes/private.js";
+import { AdminRoute } from "./Components/Routes/AdminRoute.js";
+import { Dashboard } from "./pages/user/Dashboard.js";
 import Forget from "./pages/Forget.js";
 import AdminDash from "./pages/Admin/AdminDash.js";
 import CreatProduct from "./pages/Admin/CreatProduct.js";
-import User_Display from './pages/Admin/User_Display';
+import User_Display from "./pages/Admin/User_Display";
 import CreateCategory from "./pages/Admin/CreateCategory.js";
 import Profile from "./pages/user/Profile.js";
 import Orders from "./pages/user/Orders.js";
@@ -30,10 +30,6 @@ import CategoryProduct from "./pages/CategoryProduct.js";
 import CartPage from "./pages/CartPage.js";
 import AdminOrders from "./pages/Admin/AdminOrders.js";
 
-
-
-
-
 function App() {
   return (
     <>
@@ -41,28 +37,25 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/product/:slug" element={<ProductDetails />} />
-        <Route path="/categories" element={<Categories/>} />
-        <Route path="/category/:slug" element={<CategoryProduct/>} />
-        <Route path="/cart" element={<CartPage/>} />
-        
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/category/:slug" element={<CategoryProduct />} />
+        <Route path="/cart" element={<CartPage />} />
+
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
           <Route path="user/profile" element={<Profile />} />
           <Route path="user/orders" element={<Orders />} />
         </Route>
 
-
-
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDash />} />
 
           <Route path="admin/create-category" element={<CreateCategory />} />
-          <Route path="admin/create-product" element={<CreatProduct />}/>
-          <Route path="admin/products/:slug" element={<UpdateProduct />}/>
+          <Route path="admin/create-product" element={<CreatProduct />} />
+          <Route path="admin/products/:slug" element={<UpdateProduct />} />
           <Route path="admin/user-display" element={<User_Display />} />
           <Route path="admin/products" element={<Products />} />
           <Route path="admin/admin-orders" element={<AdminOrders />} />
-          
         </Route>
 
         <Route path="/about" element={<About />} />
@@ -71,10 +64,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgetPassword" element={<Forget />} />
-        
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <ToastContainer />
     </>
   );
 }

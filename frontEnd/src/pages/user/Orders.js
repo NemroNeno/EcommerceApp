@@ -66,7 +66,7 @@ const getOrders= async ()=>{
                         <th>{ord?.status}</th>
                         <th>{ord?.buyer?.name}</th>
                         <th>{ord?.createAt}</th>
-                        <th>{ord?.payment.success? "Success": "Failer"}</th>
+                        <th>{ord?.payment.success? "Success": "Failure"}</th>
                         <th>{ord?.products?.length}</th>
                       </tr>
 

@@ -13,9 +13,11 @@ import Product from "../Components/Routes/Product";
 import { useSearch } from "../Components/Layouts/context/search";
 
 import { faArrowLeft } from "react-icons/fa";
+import { useAuth } from "../Components/Layouts/context/auth";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [auth,setAuth] = useAuth()
   const [item, setItem] = useCart([]);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -89,6 +91,7 @@ const Home = () => {
 
   useEffect(() => {
     getAllproducts();
+    console.log(auth.user);
   }, []);
 
   const handleFilter = (value, id) => {

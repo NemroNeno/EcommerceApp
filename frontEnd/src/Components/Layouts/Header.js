@@ -145,23 +145,27 @@ const Header = () => {
               </button>
             </div>
 
-            <button class="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden dark:bg-gray-800 dark:text-white dark:hover:text-white/75">
-              <span class="sr-only">Toggle menu</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
+            <div className={`${auth?.user ? "" : "invisible"}`}>
+              <select
+                name="HeadlineAct"
+                id="HeadlineAct"
+                className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+                onChange={(e) => {
+                  if (e.target.value === "admin") {
+                    navigate("/dashboard/admin");
+                  } else if (e.target.value === "user") {
+                    navigate("/dashboard/user");
+                  }
+                }}
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
+                <option value="default">{auth?.user?.name}</option>
+                {auth?.user?.role ? (
+                  <option value="admin">Admin Dashboard</option>
+                ) : (
+                  <option value="user">User Dashboard</option>
+                )}
+              </select>
+            </div>
           </div>
         </div>
       </div>

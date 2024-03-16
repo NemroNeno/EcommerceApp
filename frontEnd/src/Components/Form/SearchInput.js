@@ -10,12 +10,10 @@ const SearchInput = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res  = await axios.get(
+      const res = await axios.get(
         `http://localhost:8080/api/v1/product/search/${search.keyword}`
       );
       setSearch({ ...search, results: res?.data?.results });
-      
-      navigate("/search");
     } catch (error) {
       console.log(error);
     }

@@ -18,7 +18,7 @@ var gateway = new braintree.BraintreeGateway({
 
 export const createProductController = async (req, res) => {
   try {
-    console.log(req.fields.name)
+    console.log(req.fields.name);
     const { name, description, price, category, quantity } = req.fields;
     const { photo } = req.files;
     const products = new productModel({ ...req.fields, slug: slugify(name) });
@@ -153,7 +153,8 @@ export const updateProductController = async (req, res) => {
 
 export const productFilterController = async (req, res) => {
   try {
-    const { checked, radio } = req.body;
+    var { checked, radio } = req.body;
+    console.log(req.body);
     let args = {};
     if (checked.length > 0) args.category = checked;
     if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
@@ -328,26 +329,28 @@ export const brainTreePaymentController = async (req, res) => {
     item.map((i) => {
       total += i.price;
     });
-    let newtransaction=gateway.transaction.sale({
-      amount:total,
-      paymentMethodNonce:nonce,
-      options:{
-        submitForSettlement:true
-      }
-    }, function(error,result){
-      if(result){
-        const order= new OrderModel({
-          products:item,
-          payment:result,
-          buyer:req.user._id
-        }).save()
+    let newtransaction = gateway.transaction.sale(
+      {
+        amount: total,
+        paymentMethodNonce: nonce,
+        options: {
+          submitForSettlement: true,
+        },
+      },
+      function (error, result) {
+        if (result) {
+          const order = new OrderModel({
+            products: item,
+            payment: result,
+            buyer: req.user._id,
+          }).save();
 
-        res.json({ok:true});
+          res.json({ ok: true });
+        } else {
+          res.status(500).send(error);
+        }
       }
-      else{
-        res.status(500).send(error);
-      }
-    })
+    );
   } catch (error) {
     console.log(error);
     res.status(500).send({

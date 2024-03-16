@@ -47,12 +47,12 @@ const Header = () => {
           <nav aria-label="Global" class="hidden md:block">
             <ul class="flex items-center gap-6 text-sm gap-x-[50px]">
               <li>
-                <NavLink
+                <a
                   class="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                  to="/"
+                  href="/"
                 >
                   Home
-                </NavLink>
+                </a>
               </li>
               <li>
                 <NavLink
@@ -63,7 +63,7 @@ const Header = () => {
                 </NavLink>
               </li>
               <li>
-               <SearchInput/>
+                <SearchInput />
               </li>
 
               <li>

@@ -9,6 +9,11 @@ import { genComponentStyleHook } from "antd/es/theme/internal";
 import { prices } from "../Components/Prices";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../Components/Layouts/context/cart";
+import Product from "../Components/Routes/Product";
+import { useSearch } from "../Components/Layouts/context/search";
+
+import { faArrowLeft } from "react-icons/fa";
+
 const Home = () => {
   const navigate = useNavigate();
   const [item, setItem] = useCart([]);
@@ -19,6 +24,8 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState();
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useSearch();
+  const [searchUsed, setSearchUsed] = useState(false);
 
   //get total count
 
@@ -53,6 +60,10 @@ const Home = () => {
     getTotal();
   }, []);
 
+  useEffect(() => {
+    setProducts(search.results);
+  }, [search.results]);
+
   //Getting all the products
   const getAllproducts = async () => {
     try {
@@ -76,6 +87,10 @@ const Home = () => {
     if (!checked.length && !radio.length) getAllproducts();
   }, [checked, radio]);
 
+  useEffect(() => {
+    getAllproducts();
+  }, []);
+
   const handleFilter = (value, id) => {
     console.log(id);
     let arr = [...checked];
@@ -91,6 +106,7 @@ const Home = () => {
 
   //Filterd Products
   const FilterProducts = async () => {
+    console.log([radio]);
     const res = await axios.post(
       "http://localhost:8080/api/v1/product/product-filter",
       { checked, radio }
@@ -125,6 +141,12 @@ const Home = () => {
     if (page === 1) return;
     LoadMore();
   }, [page]);
+
+  const addCart = (p) => {
+    setItem([...item, p]);
+    toast.success("Product is added to cart");
+    localStorage.setItem("cart", JSON.stringify([...item, p]));
+  };
 
   return (
     <Layout>
@@ -177,10 +199,15 @@ const Home = () => {
                     </div>
 
                     <input
-                      onChange={(e) => setRadio(e.target.value)}
+                      onChange={(e) => {
+                        console.log(e.target);
+                        const valueArray = JSON.parse(e.target.value);
+                        setRadio([...valueArray]);
+                      }}
                       type="radio"
+                      key={p?._id}
                       name="DeliveryOption"
-                      value={p.array}
+                      value={JSON.stringify(p?.array)}
                       id="DeliveryPriority"
                       className="size-5 border-gray-300 text-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:ring-offset-gray-900"
                     />
@@ -200,46 +227,15 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <div className="col-md-9 ">
-          {JSON.stringify(radio, null, 4)}
-          <h1>All Products</h1>
+        <div className="col-md-9 max-w-fit ">
+          <h1>
+            <faArrowLeft />
+            df
+          </h1>
           <div className="d-flex ">
             <div className="d-flex flex-wrap">
               {products.map((p) => (
-                <div className="card m-2" style={{ width: "18rem" }}>
-                  <img
-                    src={`http://localhost:8080/api/v1/product/get-productphoto/${p?._id}`}
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{p?.name}</h5>
-                    <p className="card-text">
-                      {p?.description.substring(0, 30)}
-                    </p>
-                    <p className="card-text">${p?.price}</p>
-                    <button
-                      className="btn btn-primary m-2"
-                      onClick={(e) => {
-                        navigate(`/product/${p.slug}`);
-                      }}
-                    >
-                      More details
-                    </button>
-                    <button
-                      className="btn btn-secondary m-2"
-                      onClick={() => {
-                        setItem([...item, p]);
-                        toast.success("Product is added to cart");
-                        localStorage.setItem(
-                          "cart",
-                          JSON.stringify([...item, p])
-                        );
-                      }}
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
+                <Product prod={p} addCart={addCart} />
               ))}
             </div>
             {total}

@@ -17,7 +17,7 @@ import { useAuth } from "../Components/Layouts/context/auth";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [auth,setAuth] = useAuth()
+  const [auth, setAuth] = useAuth();
   const [item, setItem] = useCart([]);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -148,7 +148,10 @@ const Home = () => {
   const addCart = (p) => {
     setItem([...item, p]);
     toast.success("Product is added to cart");
-    localStorage.setItem("cart", JSON.stringify([...item, p]));
+    localStorage.setItem(
+      `cart${auth?.user?.name}`,
+      JSON.stringify([...item, p])
+    );
   };
 
   return (

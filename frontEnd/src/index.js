@@ -1,30 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from 'react-router-dom'
-import { AuthProvider } from './Components/Layouts/context/auth'
-import "antd/dist/reset.css"
-import { SearchProvider } from './Components/Layouts/context/search';
-import { CartProvider } from './Components/Layouts/context/cart';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./Components/Layouts/context/auth";
+import "antd/dist/reset.css";
+import { SearchProvider } from "./Components/Layouts/context/search";
+import { CartProvider } from "./Components/Layouts/context/cart";
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <CartProvider>
-  <SearchProvider>
-<AuthProvider>
-  <BrowserRouter>
-  
-  <App />
-
-
-</BrowserRouter>
-</AuthProvider>
- </SearchProvider>
- </CartProvider>
- 
+  <AuthProvider>
+    <CartProvider>
+      <SearchProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </SearchProvider>
+    </CartProvider>
+  </AuthProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

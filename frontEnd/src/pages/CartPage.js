@@ -22,7 +22,7 @@ const CartPage = () => {
       let index = myItem.findIndex((p) => p._id === pid);
       myItem.splice(index, 1);
       setItem(myItem);
-      localStorage.setItem("cart", JSON.stringify(myItem));
+      localStorage.setItem(`cart${auth?.user?.name}`, JSON.stringify(myItem));
     } catch (error) {
       console.log(error);
     }
